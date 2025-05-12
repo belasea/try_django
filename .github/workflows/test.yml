@@ -7,6 +7,22 @@ on:
 jobs:
   test-django-app:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: try_django_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     strategy:
       fail-fast: false
       matrix:
@@ -15,8 +31,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
@@ -28,6 +42,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h 127.0.0.1 -p 5432; do echo "Waiting for PostgreSQL..."; sleep 2; done
+
       - name: Run Django tests
-        # working-directory: ./project
-        run: python manage.py test
+        env:
+          DATABASE_NAME: try_django_db
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: postgres
+          DATABASE_HOST: 127.0.0.1
+        run: |
+          python manage.py migrate
+          python manage.py test
