@@ -25,6 +25,7 @@ BASE_URL = "*"
 #     }
 # }
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -35,6 +36,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 
 # Added Static Setting For local Machine
 STATIC_URL = '/static/'
