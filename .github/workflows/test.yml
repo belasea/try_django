@@ -29,5 +29,5 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Django tests
-        working-directory: ./project
+        # working-directory: ./project
         run: python manage.py test
