@@ -32,4 +32,4 @@ def upload_image_view(request):
         form = ImageUploadForm()
 
     context['form'] = form
-    return render(request, 'upload.html', context)
+    return render(request, 'home/upload.html', context)
