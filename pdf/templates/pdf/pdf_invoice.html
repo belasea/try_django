@@ -1,0 +1,235 @@
+
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Print Invoice | Belasea</title>
+   <style>
+        @font-face {
+            @import url('https://fonts.maateen.me/siyam-rupali/font.css');
+            font-family: 'SiyamRupali';
+        }
+    </style>
+</head>
+<body>
+
+    <section id="invoicePrint">
+        <h3 style="text-align: right; font-size: 18px; font-weight:bold">888</h3>
+        <div class="container">
+            <div style="max-width: 100%">
+                <h2 >
+                    {{object}} - জীবন আহমেদ
+                </h2>
+            </div>
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td>Clients Name</td>
+                        <td>জীবন আহমেদ</td>
+                        <td><b>Business Name</b></td>
+                        <td>Belasea</td>
+                    </tr>
+                    <tr>
+                        <td>Address Line</td>
+                        <td>বাড়ির নম্বর,<br>রাস্তার নাম, এবং শহরের নাম</td>
+                        <td><b>Date</b></td>
+                        <td>{{ object.timestamp }}</td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td>{{ object.addresses.city }}</td>
+                        <td><b>Invoice No</b></td>
+                        <td>{{ object.invoice_id }}</td>
+                    </tr>
+                    <tr>
+                        <td>Client's Cell</td>
+                        <td>01987132107</td>
+                        <td><b>Web</b></td>
+                        <td>www.belasea.com</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>FB & Instagram</b></td>
+                        <td>BelaseaBD</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>Contact</b></td>
+                        <td>+880 1305-606540</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+    </section>
+
+    <section id="invoicePrint">
+        <div class="container">
+            <br>
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="max-width: 50%">
+                                <img src="/home/djangoadmin/pyapps/venv/belasea/static_project/images/logo/belasea23.png" alt="Oops image not found" class="float-left" style="width: 50px;">
+                            </div>
+                        </td>
+                        <td style="padding-top: 20px !important;"></td>
+                        <td style="font-size: 18px; font-weight:bold">Invoice</td>
+                        <td style="text-align: right; font-size: 18px; font-weight:bold">{{ object.invoice_corner_value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+
+        <div class="container">
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td>Clients Name</td>
+                        <td>{{ object.addresses.first_name }} {{ object.addresses.last_name }}</td>
+                        <td><b>Business Name</b></td>
+                        <td>Belasea</td>
+                    </tr>
+                    <tr>
+                        <td>Address Line</td>
+                        <td>{{ object.addresses.address }} <br>{{ object.addresses.location }}</td>
+                        <td><b>Date</b></td>
+                        <td>{{ object.timestamp }}</td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td>{{ object.addresses.city }}</td>
+                        <td><b>Invoice No</b></td>
+                        <td>{{ object.invoice_id }}</td>
+                    </tr>
+                    <tr>
+                        <td>Client's Cell</td>
+                        <td>{{ object.addresses.contact_number }}</td>
+                        <td><b>Web</b></td>
+                        <td>www.belasea.com</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>FB & Instagram</b></td>
+                        <td>BelaseaBD</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>Contact</b></td>
+                        <td>+880 1305-606540</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section id="invoiceCalculation">
+        <div class="container">
+            <table style="border: 1px solid black;!important; width: 100%">
+                <tr>
+                    <th scope="col" style="border-collapse: collapse; padding: 5px; width: 50px">S.N</th>
+                    <th scope="col" style="border-collapse: collapse; padding: 5px; display: block; word-break: break-all; white-space: normal; overflow: hidden; width:290px;">
+                        Product Name
+                    </th>
+                    <th scope="col" style="border-collapse: collapse; padding: 5px; width: 100px">Quantity</th>
+                    <th scope="col" style="border-collapse: collapse; padding: 5px; width: 100px; text-align: center">Unit Price</th>
+                    <th scope="col" style="border-collapse: collapse; padding: 5px;">Amount</th>
+                </tr>
+                {% for product in object.cart.entries.all %}
+                    <tr>
+                        <td style="padding: 5px;">
+                            {{ forloop.counter }}
+                        </td>
+                        <td style="padding: 5px">
+                            {{ product.product.title }}
+                        </td>
+                        <td style="text-align: center; padding: 5px">
+                            {{ product.quantity }}
+                        </td>
+                        <td style="padding: 5px; text-align: center">
+                            {{ product.price }}
+                        </td>
+                        <td style="width: 180px; text-align: right; margin-right: 5px; padding: 5px">
+                            {{ product.entry_totat }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+    <hr>
+    <section id="invoiceCalculation">
+        <div class="container">
+            <table style="width: 100%;">
+                <tr>
+                    <th colspan="6" style="text-align: right;">Total Product Price</th>
+                    <td style="text-align: right;">600</td>
+                </tr>
+                
+                <tr>
+                    <th colspan="6" style="text-align: right;">Amount to be collected</th>
+                    <td style="text-align: right;">66</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <hr>
+    <section id="invoiceMessage">
+        <div class="container">
+            <div class="row">
+                <p>{% if object.notes %} <b>Notes :</b>  {{ object.notes }}{% endif %}</p>
+            </div>
+        </div>
+        <div class="container">
+            {% if object.delivery_method == 1 %}
+                <div class="row">
+                    <h4>
+                         Dear Sir/Ma'am, for any help, Please call us @ 01305-606540 or email @ help.belasea@gmail.com. Sold items cannot be returned if it does not fall under our terms and conditions
+                        <a href="{% url 'terms-conditions' %}" target="_blank">Click here</a> for terms and conditions"
+                    </h4>
+                </div>
+            {% elif object.delivery_method == 2 %}
+                <div class="row">
+                    <h4>
+                        Dear Sir/Ma'am,  please send BDT <span style="font-weight: bold">150 via Bkash</span>
+                        to <span style="font-weight: bold">01305-606540 (Bkash personal number),</span>
+                        and pay the rest of the amount in cash on delivery. Please call @ 01305-606540 for help.
+                    </h4>
+                </div>
+            {% elif object.delivery_method == 3 %}
+                <div class="row">
+                    <h4>Dear Sir/Ma'am, please pay <span style="font-weight: bold">full amount by Bkash</span> with
+                        <span style="font-weight: bold">Bkash Charge</span>. Please call @ 01305-606540
+                        (<span style="font-weight: bold">Bkash personal number</span>) for help.
+                    </h4>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <section id="invoiceMessage">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p><b>Address :</b> Belasea, 64-68 North Kamlapur, Eastern Kamalapur Complex, 1000, Dhaka, Bangladesh. Email: <a href="#">help.belasea@gmail.com </a></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><b>All prices are inclusive of VAT.</b> </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
