@@ -1,4 +1,4 @@
-name: Run Django Tests
+name: Run Django Tests and Lint Code
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   test-django-app:
+    name: Run Django Tests
     runs-on: ubuntu-latest
 
     services:
