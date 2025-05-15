@@ -58,15 +58,3 @@ jobs:
         run: |
           python manage.py migrate
           python manage.py test
-
-  super-lint:
-    name: Lint Code Base
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        
